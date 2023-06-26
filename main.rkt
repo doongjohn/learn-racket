@@ -65,7 +65,7 @@
 
 ;; loop
 (for ([i 3])
-  (print i))
+  (print i)) ; 0 ~ 2
 (newline)
 
 (for ([i '(1 2 3)])
