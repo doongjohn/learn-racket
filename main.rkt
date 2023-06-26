@@ -1,4 +1,6 @@
-#lang racket
+#lang typed/racket
+
+(require racket/block)
 
 
 ;; function and variable
@@ -21,7 +23,6 @@
   ((define hi "hi"))
   (displayln hi))
 
-(require racket/block)
 (block
  (define hi "hi")
  (displayln hi))
@@ -47,13 +48,30 @@
 (block
  (display "Hello!\n>> ")
  (define input (read-line))
- (if (or (string-prefix? (string-downcase input) "hi")
-         (string-prefix? (string-downcase input) "hello")
-         (string-prefix? (string-downcase input) "안녕"))
-     (displayln "Nice to meet you!")
-     (displayln "What??")))
+ (when (not (eof-object? input))
+   (if (or (string-prefix? (string-downcase input) "hi")
+           (string-prefix? (string-downcase input) "hello")
+           (string-prefix? (string-downcase input) "안녕"))
+       (displayln "Nice to meet you!")
+       (displayln "What??"))))
+
+
+;; list
+(display "(list 1 2 3) and '(1 2 3) is ")
+(if (equal? '(1 2 3) (list 1 2 3))
+    (displayln "equal")
+    (displayln "not equal"))
 
 
 ;; loop
-(for ([i (list 1 2 3)])
-  (println i))
+(for ([i 3])
+  (print i))
+(newline)
+
+(for ([i '(1 2 3)])
+  (print i))
+(newline)
+
+;; for/list returns a list
+(println (for/list : (Listof Integer) ([i '(1 2 3)])
+           (* i 2)))
