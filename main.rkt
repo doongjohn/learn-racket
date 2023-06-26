@@ -25,7 +25,7 @@
  (define hi "hi")
  (displayln hi))
 
-;; (displayln hi) ;; <-- error
+;; (displayln hi) ;; <-- error: `hi: unbound identifier`
 
 
 ;; if else
