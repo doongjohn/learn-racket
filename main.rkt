@@ -5,6 +5,7 @@
 (define (hello name)
   (printf "Hello, ~a\n" name))
 
+;; there is no immutable variable in racket
 (define person-name "John")
 (hello person-name)
 (set! person-name "Steve")
