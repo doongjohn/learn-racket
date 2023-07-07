@@ -34,6 +34,17 @@
 ;; (displayln hi) ;; <-- error: `hi: unbound identifier`
 
 
+;; character
+;; https://docs.racket-lang.org/guide/characters.html#%28tech._character%29
+(displayln #\A)
+(displayln #\uC548) ;; <-- 안
+
+
+;; string
+(for ([ch "안녕"])
+  (println ch))
+
+
 ;; if else
 (if #t
     (displayln "true")
@@ -51,11 +62,12 @@
 
 (block
  (display "Hello!\n>> ")
- (define input (read-line))
- (when (not (eof-object? input))
-   (if (or (string-prefix? (string-downcase input) "hi")
-           (string-prefix? (string-downcase input) "hello")
-           (string-prefix? (string-downcase input) "안녕"))
+ (define raw-input (read-line))
+ (when (not (eof-object? raw-input))
+   (define input (string-downcase raw-input))
+   (if (or (string-prefix? input "hi")
+           (string-prefix? input "hello")
+           (string-prefix? input "안녕"))
        (displayln "Nice to meet you!")
        (displayln "What??"))))
 
@@ -74,6 +86,8 @@
 
 ;; vector
 ;; https://docs.racket-lang.org/reference/vectors.html
+;; fxvector: https://docs.racket-lang.org/reference/fixnums.html#%28tech._fxvector%29
+;; flvector: https://docs.racket-lang.org/reference/flonums.html#%28part._flvectors%29
 (block
  ;; vector is a one dimensional storage
  (display "(vector 1 2 3) and #(1 2 3) is ")
