@@ -1,6 +1,7 @@
 #lang typed/racket
 
 (require racket/block)
+(require math/array)
 
 
 ;; function and variable
@@ -17,6 +18,9 @@
 ;; scoped variable
 (let ()
   (define hi "hi")
+  (displayln hi))
+
+(let ((hi "hi"))
   (displayln hi))
 
 (local
@@ -57,21 +61,70 @@
 
 
 ;; list
-(display "(list 1 2 3) and '(1 2 3) is ")
-(if (equal? '(1 2 3) (list 1 2 3))
-    (displayln "equal")
-    (displayln "not equal"))
+(block
+ (display "(list 1 2 3) and '(1 2 3) is ")
+ (if (equal? (list 1 2 3) '(1 2 3))
+     (displayln "equal")
+     (displayln "not equal"))
+
+ ;; multiple types of items can be stored
+ (define some-list '(1 #\a 3.3))
+ (displayln some-list))
 
 
-;; loop
-(for ([i 3])
-  (print i)) ; 0 ~ 2
-(newline)
+;; vector
+;; https://docs.racket-lang.org/reference/vectors.html
+(block
+ ;; vector is a one dimensional storage
+ (display "(vector 1 2 3) and #(1 2 3) is ")
+ (if (equal? (vector 1 2 3) #( 1 2 3))
+     (displayln "equal")
+     (displayln "not equal"))
 
-(for ([i '(1 2 3)])
-  (print i))
-(newline)
+ ;; multiple types of items can be stored
+ (define some-vec #(1 #\a 3.3))
+ (displayln some-vec)
 
-;; for/list returns a list
-(println (for/list : (Listof Integer) ([i '(1 2 3)])
-           (* i 2)))
+ ;; vector indexing
+ (define v #(1 2 3))
+ (printf "v[1] = ~a\n" (vector-ref v 1)))
+
+
+;; for loop
+(block
+ (for ([i 3])
+   (print i)) ; 0 ~ 2
+ (newline)
+
+ (for ([i '(1 2 3)])
+   (print i))
+ (newline)
+
+ ;; for/list returns a list (similar to map)
+ (println
+  (for/list : (Listof Integer) ([i '(1 2 3)])
+    (* i 2))))
+
+
+;; array
+;; https://docs.racket-lang.org/math/array.html
+(block
+ ;; array is a >=1 dimensional storage
+ (define arr (array #[0 1 2 3]))
+ (println arr)
+
+ (define arr2d (array #[#[0 1 2 3]
+                        #[4 5 6 7]]))
+ (println arr2d)
+
+ ;; multiple types of items can be stored
+ (define some-arr (array #[0 #\a 3.3]))
+ (println some-arr)
+
+ ;; array indexing
+ (printf "arr[2] = ~a\n" (array-ref arr #(2)))
+ (printf "arr2d[1][2] = ~a\n" (array-ref arr2d #(1 2)))
+
+ ;; loop through array
+ (for ([i (in-array arr)])
+   (displayln i)))
