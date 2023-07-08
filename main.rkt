@@ -131,14 +131,14 @@
                         #[4 5 6 7]]))
  (println arr2d)
 
- ;; multiple types of items can be stored
- (define some-arr (array #[0 #\a 3.3]))
- (println some-arr)
-
  ;; array indexing
  (printf "arr[2] = ~a\n" (array-ref arr #(2)))
  (printf "arr2d[1][2] = ~a\n" (array-ref arr2d #(1 2)))
 
  ;; loop through array
  (for ([i (in-array arr)])
-   (displayln i)))
+   (displayln i))
+
+ ;; multiple types of items can be stored
+ (define some-arr (array #[0 #\a 3.3]))
+ (println some-arr))
