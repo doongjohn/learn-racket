@@ -1,3 +1,11 @@
+;;;; Learn Racket
+;;; TODO:
+;;; - learn typed racket:
+;;;   - https://docs.racket-lang.org/ts-guide/
+;;;   - https://docs.racket-lang.org/ts-reference/index.html
+;;; - learn module system: https://docs.racket-lang.org/guide/modules.html
+;;; - learn package manager: https://docs.racket-lang.org/pkg/index.html
+
 #lang typed/racket
 
 (require racket/block)
@@ -7,12 +15,13 @@
 ;; function and variable
 (define (hello name)
   (printf "Hello, ~a\n" name))
+(define hello2 (lambda name
+                 (printf "Hello, ~a\n" name)))
 
-;; there is no immutable variable in racket
 (define person-name "John")
 (hello person-name)
-(set! person-name "Steve")
-(hello person-name)
+(set! person-name "Steve") ; <-- variables can be mutated via `set!`
+(hello2 person-name)
 
 
 ;; scoped variable
@@ -142,3 +151,13 @@
  ;; multiple types of items can be stored
  (define some-arr (array #[0 #\a 3.3]))
  (println some-arr))
+
+
+;; struct
+(define-struct human ([name : String]
+                      [age : Integer]))
+
+(define some-human (make-human "John" 20))
+(println (human-name some-human))
+;;        ^^^^^^^^^^^^^^^^^^^^^ --> access struct field `name` of `some-human`
+(println (human-age some-human))
