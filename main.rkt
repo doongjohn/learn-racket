@@ -8,8 +8,8 @@
 
 #lang typed/racket
 
-(require racket/block)
-(require math/array)
+(require racket/block
+         math/array)
 
 
 ;; function and variable
@@ -154,10 +154,26 @@
 
 
 ;; struct
+;; you cannot define struct in a block
+(struct point ([x : Number]
+               [y : Number]))
+(block
+ (define p (point 1.2 3.0))
+ (printf "p.x = ~a\np.y = ~a\n" (point-x p) (point-y p)))
+
+;; define-struct
 (define-struct human ([name : String]
                       [age : Integer]))
+(block
+ (define some-human (make-human "John" 20))
+ (println (human-name some-human))
+ ;;        ^^^^^^^^^^^^^^^^^^^^^ --> access struct field `name` of `some-human`
+ (println (human-age some-human))
 
-(define some-human (make-human "John" 20))
-(println (human-name some-human))
-;;        ^^^^^^^^^^^^^^^^^^^^^ --> access struct field `name` of `some-human`
-(println (human-age some-human))
+ (if (human? some-human)
+     (displayln "it is a human")
+     (displayln "it is not a human"))
+
+ (if (human? "hello")
+     (displayln "it is a human")
+     (displayln "it is not a human")))
