@@ -78,7 +78,7 @@
            (string-prefix? input "hello")
            (string-prefix? input "안녕"))
        (displayln "Nice to meet you!")
-       (displayln "What??"))))
+       (displayln "Ok bye..."))))
 
 
 ;; list
