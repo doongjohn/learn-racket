@@ -67,7 +67,11 @@
 (block
  (display ">> ")
  (define input (read-line))
- (printf "your input: ~a\n" input))
+ (when (not (eof-object? input))
+   (printf "your input: ~a\n" input)
+   (let ((last-char (string-ref input (sub1 (string-length input)))))
+     (printf "last character: ~a\n" (char->integer last-char))))) ; <-- on windows the last character is '\r'
+
 
 (block
  (display "Hello!\n>> ")
