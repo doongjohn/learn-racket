@@ -63,6 +63,15 @@
     (displayln "false"))
 
 
+(: unwrap-null-or (All (T) ((U Null T) T -> T)))
+(define (unwrap-null-or value default)
+  (if (null? value) default value))
+
+(: unwrap-eof-or (All (T) ((U EOF T) T -> T)))
+(define (unwrap-eof-or value default)
+  (if (eof-object? value) default value))
+
+
 ;; read-line
 (block
  (display ">> ")
@@ -70,7 +79,15 @@
  (when (not (eof-object? input))
    (printf "your input: ~a\n" input)
    (let ((last-char (string-ref input (sub1 (string-length input)))))
-     (printf "last character: ~a\n" (char->integer last-char))))) ; <-- on windows the last character is '\r'
+     (when (char=? last-char #\return)
+       (printf "last character is \\r\n"))))) ; <-- on windows the last character is '\r'
+
+(block
+ (display ">> ")
+ (define input-raw (read-line))
+ (when (not (eof-object? input-raw))
+   (define input (unwrap-eof-or (string-trim input-raw) ""))
+   (printf "your input: ~a\n" input)))
 
 
 (block
